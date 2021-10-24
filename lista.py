@@ -23,10 +23,15 @@ class LinkedList:
         while (temp.next is not None): #dopoki nie dojdzie do konca listy
             temp = temp.next
         self.tail = temp # przepiecie taila do ostatniego elementu
+
     def append(self, value: Any):
         temp = Node(value)  # stworzenie nowego wezla
-        self.tail.next = temp  # podpiecie nowo stworzonego wezla pod ostatni element listy
-        self.tail = temp  # przepiecie taila do nowego wezla
+        if self.head is None and self.tail is None: #sprawdzamy czy lista jest pusta
+            self.head = temp #przepisanie heada do nowego wezla
+            self.tail = temp #przepisanie taila do nowego wezla
+        else:
+            self.tail.next = temp  # podpiecie nowo stworzonego wezla pod ostatni element listy
+            self.tail = temp  # przepiecie taila do nowego wezla
 
     def node(self, at: int):
         temp = self.head  # referencja do pierwszego elementu
@@ -58,48 +63,50 @@ class LinkedList:
         after.next = after.next.next  #przepiecie referencji do kolejnego elementu
 
 def printlist(Llist):
-    result = '' #pusty string
-    temp = Llist.head #pierwszy element listy
-    while(temp.next is not None): #petla iteracyjna po liscie az do przedostatniego elementu
-        result = result + str(temp.value) + ' -> ' # dopisanie elementu i strzalki do stringa
-        temp = temp.next #przejscie do kolejnego elementu w petli
-    result = result + str(temp.value) #dodanie ostatniego elementu do stringa
+    result = ''  # pusty string
+    temp = Llist.head  # pierwszy element listy
+    while (temp.next is not None):  # petla iteracyjna po liscie az do przedostatniego elementu
+        result = result + str(temp.value) + ' -> '  # dopisanie elementu i strzalki do stringa
+        temp = temp.next  # przejscie do kolejnego elementu w petli
+    result = result + str(temp.value)  # dodanie ostatniego elementu do stringa
     return result
 
-def len(Llist):
-    temp = Llist.head #pierwszy element listy
-    counter = 0 #ustawienie licznika na zero
-    while(temp.next is not None): #petla iteracyjna po liscie az do przedostatniego elementu
-        counter += 1 #zwiekszenie licznika o jeden
-        temp = temp.next #przejscie do kolejnego elementu w petli
-    return counter+1 #dodanie ostatniego elementu i zwrocenie dlugosci
+def length(Llist):
+    temp = Llist.head  # pierwszy element listy
+    counter = 0  # ustawienie licznika na zero
+    if temp is None: return 0
+    while (temp.next is not None):  # petla iteracyjna po liscie az do przedostatniego elementu
+        counter += 1  # zwiekszenie licznika o jeden
+        temp = temp.next  # przejscie do kolejnego elementu w petli
+    return counter + 1  # dodanie ostatniego elementu i zwrocenie dlugosci
 
-list_ = LinkedList()
-assert list_.head == None
-list_.push(1)
-list_.push(0)
 
-assert printlist(list_) == '0 -> 1'
-list_.append(9)
-list_.append(10)
-
-assert printlist(list_) == '0 -> 1 -> 9 -> 10'
-middle_node = list_.node(at=1)
-list_.insert(5, after=middle_node)
-
-assert printlist(list_) == '0 -> 1 -> 5 -> 9 -> 10'
-first_element = list_.node(at=0)
-returned_first_element = list_.pop()
-
-assert first_element.value == returned_first_element
-last_element = list_.node(at=3)
-returned_last_element = list_.remove_last()
-
-assert last_element.value == returned_last_element
-assert printlist(list_) == '1 -> 5 -> 9'
-second_node = list_.node(at=1)
-list_.remove(second_node)
-
-assert printlist(list_) == '1 -> 5'
-
-assert len(list_) == 2
+# list_ = LinkedList()
+# assert list_.head == None
+# list_.push(1)
+# list_.push(0)
+#
+# assert printlist(list_) == '0 -> 1'
+# list_.append(9)
+# list_.append(10)
+#
+# assert printlist(list_) == '0 -> 1 -> 9 -> 10'
+# middle_node = list_.node(at=1)
+# list_.insert(5, after=middle_node)
+#
+# assert printlist(list_) == '0 -> 1 -> 5 -> 9 -> 10'
+# first_element = list_.node(at=0)
+# returned_first_element = list_.pop()
+#
+# assert first_element.value == returned_first_element
+# last_element = list_.node(at=3)
+# returned_last_element = list_.remove_last()
+#
+# assert last_element.value == returned_last_element
+# assert printlist(list_) == '1 -> 5 -> 9'
+# second_node = list_.node(at=1)
+# list_.remove(second_node)
+#
+# assert printlist(list_) == '1 -> 5'
+#
+# assert length(list_) == 2
